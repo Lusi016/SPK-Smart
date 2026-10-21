@@ -13,7 +13,7 @@
       crossorigin="anonymous"
     />
 
-    <!-- Styling Tambahan -->
+    <!-- Styling Tambahan: Semua Tombol Menu Seragam Seperti Dashboard -->
     <style>
       .step-card {
         border-left: 4px solid #0d6efd;
@@ -22,167 +22,180 @@
       .step-card:hover {
         transform: translateY(-3px);
       }
+
+      /* SEMUA TOMBOL MENU DIBUAT SERAGAM SEPERTI TOMBOL UTAMA */
+      .sidebar-menu .nav-link {
+        color: #ffffff !important; /* Teks putih agar kontras */
+        background-color: #0d6efd !important; /* Warna biru seragam rata untuk semua tombol */
+        border-radius: 8px;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 4px rgba(13, 110, 253, 0.15);
+      }
+
+      /* EFEK KETIKA MOUSE DIARAHKAN (HOVER) - WARNA BERUBAH SEDIKIT LEBIH GELAP */
+      .sidebar-menu .nav-link:hover {
+        background-color: #0b5ed7 !important; /* Biru sedikit lebih tua saat di-hover */
+        transform: translateX(4px); /* Efek geser kanan halus */
+        box-shadow: 0 4px 6px rgba(13, 110, 253, 0.25);
+      }
+
+      /* KETIKA MENU SEDANG AKTIF */
+      .sidebar-menu .nav-link.active {
+        background-color: #0a58ca !important; /* Biru pekat untuk halaman aktif */
+        font-weight: bold;
+      }
     </style>
   </head>
   <body class="bg-light">
-    <!-- HEADER / NAVBAR ATAS -->
-    <nav class="navbar navbar-dark bg-primary fixed-top shadow-sm">
-      <div class="container-fluid">
-        <!-- Tombol Menu Garis 3 -->
-        <button
-          class="navbar-toggler border-0"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#sidebarOffcanvas"
-          aria-controls="sidebarOffcanvas"
+    <!-- PEMBUNGKUS UTAMA LAYOUT 2 KOLOM -->
+    <div class="container-fluid">
+      <div class="row flex-nowrap">
+        <!-- ================= KOLOM KIRI: SIDEBAR PERMANEN ================= -->
+        <div
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-white border-end min-vh-100 shadow-sm"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+          <div
+            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-3 text-white"
+          >
+            <!-- Logo / Judul Sidebar -->
+            <a
+              href="Dasboard.html"
+              class="d-flex align-items-center pb-3 mb-md-3 me-md-auto text-dark text-decoration-none border-bottom w-100"
+            >
+              <span class="fs-5 fw-bold text-primary">SPKSmart</span>
+            </a>
 
-        <!-- Logo Brand -->
-        <a class="navbar-brand fw-bold me-auto ms-2" href="#">SPKSmart</a>
-      </div>
-    </nav>
-
-    <!-- SIDEBAR NAVIGASI (OFFCANVAS) -->
-    <div
-      class="offcanvas offcanvas-start"
-      tabindex="-1"
-      id="sidebarOffcanvas"
-      aria-labelledby="sidebarOffcanvasLabel"
-    >
-      <div class="offcanvas-header bg-primary text-white">
-        <h5 class="offcanvas-title fw-bold" id="sidebarOffcanvasLabel">
-          Menu SPKSmart
-        </h5>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item mb-2">
-            <a class="nav-link active" href="#dashboard">🏠 Dashboard</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link text-dark" href="inputData.html"
-              >Input Data<br /><small class="text-muted fs-7"
-                >Parameter Model</small
-              ></a
+            <!-- Daftar Menu Navigasi dengan Kelas .sidebar-menu -->
+            <ul
+              class="nav nav-pills flex-column mb-auto w-100 sidebar-menu gap-2"
             >
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link text-dark" href="formulasilp.html"
-              >Formulasi LP<br /><small class="text-muted fs-7"
-                >Model Matematis</small
-              ></a
-            >
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link text-dark" href="graftlp.html"
-              >Grafik LP<br /><small class="text-muted fs-7"
-                >Daerah Feasible</small
-              ></a
-            >
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link text-dark" href="rekomendasi.html"
-              >Analisis Hasil Keputusan <br /><small class="text-muted fs-7"
-                >Keputusan Optimal & Slack</small
-              ></a
-            >
-          </li>
-          <li class="nav-item mb-2 border-top pt-2">
-            <a class="nav-link text-dark" href="#panduan"
-              >Panduan Pengguna Sistem</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- KONTEN UTAMA DASHBOARD -->
-    <main class="container my-5 pt-4">
-      <!-- SECTION 1: PENJELASAN WEBSITE / SAMBUTAN -->
-      <section
-        id="dashboard"
-        class="p-4 p-md-5 bg-white rounded-3 shadow-sm border mt-3 mb-4"
-      >
-        <div class="row align-items-center">
-          <div class="col-lg-8">
-            <span class="badge bg-primary mb-2"
-              >Sistem Penunjang Keputusan</span
-            >
-            <h1 class="display-6 fw-bold text-primary mb-2">
-              SPKSmart: Optimasi Keputusan Bisnis Cerdas
-            </h1>
-            <p class="text-secondary fst-italic mb-3">
-              Solusi Berbasis Pemodelan Matematika Linear Programming (LP)
-              Metode Grafik.
-            </p>
-            <p class="lead fs-6 text-dark mb-4">
-              <strong>SPKSmart</strong> SPKSmart adalah sistem pendukung
-              keputusan berbasis Linear Programming (LP) Metode Grafik yang
-              membantu Anda menemukan solusi optimal dari berbagai permasalahan.
-              Dengan dua variabel yang dapat disesuaikan secara bebas, SPKSmart
-              memudahkan proses analisis kendala, visualisasi grafik, serta
-              optimasi untuk memaksimalkan keuntungan atau meminimalkan biaya
-              secara cepat dan akurat.
-            </p>
-            <div class="d-flex flex-wrap gap-2">
-              <a href="#parameter" class="btn btn-primary btn-lg fs-6"
-                >🚀 Mulai Input Parameter Usaha</a
-              >
-              <a
-                href="#cara-kerja"
-                class="btn btn-outline-secondary btn-lg fs-6"
-                >📖 Pelajari Cara Kerja LP</a
-              >
-            </div>
-          </div>
-          <div class="col-lg-4 d-none d-lg-block text-center">
-            <div
-              class="p-4 bg-primary bg-opacity-10 rounded-4 border border-primary border-opacity-25"
-            >
-              <h5 class="fw-bold text-primary mb-2">Keunggulan SPKSmart</h5>
-              <ul class="text-start fs-6 text-secondary mb-0 ps-3">
-                <li class="mb-2">
-                  Visualisasi daerah penyelesaian
-                  <span
-                    class="text-primary text-decoration-underline"
-                    role="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Feasible region adalah daerah pada grafik yang berisi semua kemungkinan solusi yang memenuhi seluruh syarat dalam persoalan."
+              <li class="nav-item">
+                <a class="nav-link active py-2 px-3" href="Dasboard.html"
+                  >🏠 Dashboard</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="inputData.html">
+                  📝 Input Data<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Parameter Model</small
                   >
-                    (Feasible Region)
-                  </span>
-                  otomatis.
-                </li>
-                <li class="mb-2">
-                  Penentuan titik koordinat sudut optimal secara presisi.
-                </li>
-                <li class="mb-0">
-                  Analisis efisiensi penggunaan sisa sumber daya
-                  <span
-                    class="text-primary text-decoration-underline"
-                    role="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="bottom"
-                    title="Slack adalah sisa dari batas maksimum, sedangkan surplus adalah kelebihan dari batas minimum. Keduanya digunakan dalam metode program linear untuk mengetahui selisih antara nilai solusi dan batas kendala."
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="formulasilp.html">
+                  📐 Formulasi LP<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Model Matematis</small
                   >
-                    (Slack/Surplus) </span
-                  >.
-                </li>
-              </ul>
-            </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="graftlp.html">
+                  📊 Grafik LP<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Daerah Feasible</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="rekomendasi.html">
+                  💡 Analisis Hasil Keputusan<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Keputusan Optimal & Slack</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item border-top pt-2 mt-2">
+                <a class="nav-link py-2 px-3" href="#panduan">
+                  📖 Panduan Pengguna Sistem
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-      </section>
-    </main>
+
+        <!-- ================= KOLOM KANAN: KONTEN UTAMA ================= -->
+        <main class="col py-4 px-4 bg-light">
+          <!-- SECTION 1: PENJELASAN WEBSITE / SAMBUTAN -->
+          <section
+            id="dashboard"
+            class="p-4 p-md-5 bg-white rounded-3 shadow-sm border mt-2 mb-4"
+          >
+            <div class="row align-items-center">
+              <div class="col-lg-8">
+                <span class="badge bg-primary mb-2"
+                  >Sistem Penunjang Keputusan</span
+                >
+                <h1 class="display-6 fw-bold text-primary mb-2">
+                  SPKSmart: Optimasi Keputusan Bisnis Cerdas
+                </h1>
+                <p class="text-secondary fst-italic mb-3">
+                  Solusi Berbasis Pemodelan Matematika Linear Programming (LP)
+                  Metode Grafik.
+                </p>
+                <p class="lead fs-6 text-dark mb-4">
+                  <strong>SPKSmart</strong> adalah sistem pendukung keputusan
+                  berbasis Linear Programming (LP) Metode Grafik yang membantu
+                  Anda menemukan solusi optimal dari berbagai permasalahan.
+                  Dengan dua variabel yang dapat disesuaikan secara bebas,
+                  SPKSmart memudahkan proses analisis kendala, visualisasi
+                  grafik, serta optimasi untuk memaksimalkan keuntungan atau
+                  meminimalkan biaya secara cepat dan akurat.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="inputData.html" class="btn btn-primary btn-lg fs-6"
+                    >🚀 Mulai Input Parameter Usaha</a
+                  >
+                  <a
+                    href="panduanpengguna.html"
+                    class="btn btn-outline-secondary btn-lg fs-6"
+                    >📖 Pelajari Cara Kerja LP</a
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 d-none d-lg-block text-center">
+                <div
+                  class="p-4 bg-primary bg-opacity-10 rounded-4 border border-primary border-opacity-25"
+                >
+                  <h5 class="fw-bold text-primary mb-2">Keunggulan SPKSmart</h5>
+                  <ul class="text-start fs-6 text-secondary mb-0 ps-3">
+                    <li class="mb-2">
+                      Visualisasi daerah penyelesaian
+                      <span
+                        class="text-primary text-decoration-underline"
+                        role="button"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Feasible region adalah daerah pada grafik yang berisi semua kemungkinan solusi yang memenuhi seluruh syarat dalam persoalan."
+                      >
+                        (Feasible Region)
+                      </span>
+                      otomatis.
+                    </li>
+                    <li class="mb-2">
+                      Penentuan titik koordinat sudut optimal secara presisi.
+                    </li>
+                    <li class="mb-0">
+                      Analisis efisiensi penggunaan sisa sumber daya
+                      <span
+                        class="text-primary text-decoration-underline"
+                        role="button"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="Slack adalah sisa dari batas maksimum, sedangkan surplus adalah kelebihan dari batas minimum. Keduanya digunakan dalam metode program linear untuk mengetahui selisih antara nilai solusi dan batas kendala."
+                      >
+                        (Slack/Surplus) </span
+                      >.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
 
     <!-- JS Bootstrap 5.2.3 Bundle -->
     <script

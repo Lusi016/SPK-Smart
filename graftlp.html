@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafik Linear Programming - SPK Smart</title>
+    <!-- Bootstrap 5.2.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="app.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar / Header Sederhana -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="Dasboard.html">SPK-Smart</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="Dasboard.html">Dashboard</a>
+                <a class="nav-link" href="inputData.html">Input Data</a>
+                <a class="nav-link" href="formulasilp.html">Formula</a>
+                <a class="nav-link active" href="graftlp.html">Grafik</a>
+                <a class="nav-link" href="rekomendasi.html">Rekomendasi</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                
+                <!-- Card Utama -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h4 class="mb-0 text-primary fw-bold">Grafik Daerah Penyelesaian (Linear Programming)</h4>
+                        <p class="text-muted mb-0 small">Visualisasi kurva kendala dan titik optimum untuk 2 variabel ($X_1$ dan $X_2$).</p>
+                    </div>
+                    <div class="card-body">
+                        
+                        <!-- Area Kanvas Grafik -->
+                        <div class="chart-container mb-4" style="position: relative; height:400vh; max-height:450px; width:100%;">
+                            <canvas id="lpChart"></canvas>
+                        </div>
+
+                        <!-- Keterangan Titik Optimum -->
+                        <div class="alert alert-info" role="alert">
+                            <h5 class="alert-heading fw-bold">Analisis Titik Ekstrem:</h5>
+                            <p class="mb-0">Grafik di atas menampilkan garis kendala serta titik potong (titik sudut) yang merepresentasikan daerah feasibel untuk pencarian nilai optimum (maksimum/minimum).</p>
+                        </div>
+
+                        <!-- Tombol Navigasi -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="formulasilp.html" class="btn btn-secondary">&laquo; Kembali ke Formula</a>
+                            <a href="rekomendasi.html" class="btn btn-success">Lihat Rekomendasi Akhir &raquo;</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.2.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js CDN untuk merender grafik -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Contoh Script Inisialisasi Grafik menggunakan Chart.js
+        const ctx = document.getElementById('lpChart').getContext('2d');
+        const lpChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [0, 10, 20, 30, 40, 50, 60],
+                datasets: [{
+                    label: 'Kendala 1 (2X₁ + 3X₂ ≤ 120)',
+                    data: [{x: 0, y: 40}, {x: 60, y: 0}],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: 'Kendala 2 (X₁ + 2X₂ ≤ 80)',
+                    data: [{x: 0, y: 40}, {x: 80, y: 0}],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Variabel X₁'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Variabel X₂'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
