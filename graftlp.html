@@ -1,116 +1,317 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grafik Linear Programming - SPK Smart</title>
-    <!-- Bootstrap 5.2.3 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="app.css">
-</head>
-<body class="bg-light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPKSmart - Grafik Linear Programming</title>
 
-    <!-- Navbar / Header Sederhana -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="Dasboard.html">SPK-Smart</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="Dasboard.html">Dashboard</a>
-                <a class="nav-link" href="inputData.html">Input Data</a>
-                <a class="nav-link" href="formulasilp.html">Formula</a>
-                <a class="nav-link active" href="graftlp.html">Grafik</a>
-                <a class="nav-link" href="rekomendasi.html">Rekomendasi</a>
-            </div>
+    <!-- CSS Bootstrap 5.2.3 CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+
+    <!-- Custom CSS Seragam dengan Dashboard -->
+    <style>
+      .step-card {
+        border-left: 4px solid #0d6efd;
+        transition: transform 0.2s ease-in-out;
+      }
+      .step-card:hover {
+        transform: translateY(-3px);
+      }
+
+      /* SEMUA TOMBOL MENU DIBUAT SERAGAM */
+      .sidebar-menu .nav-link {
+        color: #ffffff !important;
+        background-color: #0d6efd !important;
+        border-radius: 8px;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 4px rgba(13, 110, 253, 0.15);
+      }
+
+      .sidebar-menu .nav-link:hover {
+        background-color: #0b5ed7 !important;
+        transform: translateX(4px);
+        box-shadow: 0 4px 6px rgba(13, 110, 253, 0.25);
+      }
+
+      .sidebar-menu .nav-link.active {
+        background-color: #0a58ca !important;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <!-- PEMBUNGKUS UTAMA LAYOUT 2 KOLOM -->
+    <div class="container-fluid">
+      <div class="row flex-nowrap">
+        <!-- ================= KOLOM KIRI: SIDEBAR PERMANEN ================= -->
+        <div
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-white border-end min-vh-100 shadow-sm"
+        >
+          <div
+            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-3 text-white"
+          >
+            <!-- Logo / Judul Sidebar -->
+            <a
+              href="Dasboard.html"
+              class="d-flex align-items-center pb-3 mb-md-3 me-md-auto text-dark text-decoration-none border-bottom w-100"
+            >
+              <span class="fs-5 fw-bold text-primary">SPKSmart</span>
+            </a>
+
+            <!-- Daftar Menu Navigasi -->
+            <ul
+              class="nav nav-pills flex-column mb-auto w-100 sidebar-menu gap-2"
+            >
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="Dasboard.html"
+                  >🏠 Dashboard</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="inputData.html">
+                  📝 Input Data<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Parameter Model</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="formulasilp.html">
+                  📐 Formulasi LP<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Model Matematis</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <!-- MENU AKTIF DI HALAMAN INI -->
+                <a class="nav-link active py-2 px-3" href="graftlp.html">
+                  📊 Grafik LP<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Daerah Feasible</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="rekomendasi.html">
+                  💡 Analisis Hasil Keputusan<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Keputusan Optimal & Slack</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item border-top pt-2 mt-2">
+                <a class="nav-link py-2 px-3" href="panduanpengguna.html">
+                  📖 Panduan Pengguna Sistem
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </nav>
 
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                
-                <!-- Card Utama -->
-                <div class="card shadow-sm">
-                    <div class="card-header bg-white py-3">
-                        <h4 class="mb-0 text-primary fw-bold">Grafik Daerah Penyelesaian (Linear Programming)</h4>
-                        <p class="text-muted mb-0 small">Visualisasi kurva kendala dan titik optimum untuk 2 variabel ($X_1$ dan $X_2$).</p>
-                    </div>
-                    <div class="card-body">
-                        
-                        <!-- Area Kanvas Grafik -->
-                        <div class="chart-container mb-4" style="position: relative; height:400vh; max-height:450px; width:100%;">
-                            <canvas id="lpChart"></canvas>
-                        </div>
-
-                        <!-- Keterangan Titik Optimum -->
-                        <div class="alert alert-info" role="alert">
-                            <h5 class="alert-heading fw-bold">Analisis Titik Ekstrem:</h5>
-                            <p class="mb-0">Grafik di atas menampilkan garis kendala serta titik potong (titik sudut) yang merepresentasikan daerah feasibel untuk pencarian nilai optimum (maksimum/minimum).</p>
-                        </div>
-
-                        <!-- Tombol Navigasi -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="formulasilp.html" class="btn btn-secondary">&laquo; Kembali ke Formula</a>
-                            <a href="rekomendasi.html" class="btn btn-success">Lihat Rekomendasi Akhir &raquo;</a>
-                        </div>
-
-                    </div>
-                </div>
-
+        <!-- ================= KOLOM KANAN: KONTEN UTAMA ================= -->
+        <main class="col py-4 px-4 bg-light">
+          <!-- HEADER HALAMAN -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <span class="badge bg-primary mb-1">Visualisasi Model</span>
+              <h2 class="fw-bold text-primary mb-0">Grafik LP & Daerah Feasible</h2>
+              <p class="text-secondary small mb-0">
+                Visualisasi kurva kendala, arsiran daerah penyelesaian, dan titik sudut optimal.
+              </p>
             </div>
-        </div>
+            <div>
+              <a href="formulasilp.html" class="btn btn-outline-primary btn-sm me-2">
+                📐 Kembali ke Formula
+              </a>
+              <a href="rekomendasi.html" class="btn btn-primary btn-sm">
+                💡 Lihat Rekomendasi ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD UTAMA GRAFIK CERAH -->
+          <div class="card border-0 shadow-sm rounded-3 mb-4 bg-white">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-dark mb-3 border-bottom pb-2">
+                📈 Grafik Batasan Kendala & Daerah Penyelesaian
+              </h5>
+
+              <!-- Area Kanvas Grafik -->
+              <div class="chart-container mb-4" style="position: relative; height:420px; width:100%;">
+                <canvas id="lpChart"></canvas>
+              </div>
+
+              <!-- Keterangan Hasil Optimal -->
+              <div class="alert alert-success border-0 shadow-sm rounded-3 mb-0" role="alert">
+                <h6 class="alert-heading fw-bold text-success mb-1">🎯 Hasil Analisis Titik Optimal:</h6>
+                <p class="mb-1 small text-dark">
+                  Titik optimum berada pada koordinat 
+                  <strong id="infoTitikOptimum">(X₁ = 24, X₂ = 28)</strong>.
+                </p>
+                <hr class="my-2">
+                <p class="mb-0 small text-muted">
+                  *Area arsiran hijau muda merepresentasikan <strong>Daerah Feasible</strong> (semua kombinasi nilai yang memenuhi seluruh syarat kendala).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION INFORMASI TAMBAHAN -->
+          <div class="card border-0 shadow-sm rounded-3 step-card bg-white p-3">
+            <div class="d-flex align-items-center">
+              <div class="fs-2 me-3 text-primary">💡</div>
+              <div>
+                <h6 class="fw-bold mb-1">Catatan Keterangan Sumbu</h6>
+                <p class="text-secondary small mb-0">
+                  Sumbu Horizontal mewakili <strong id="infoLabelX1">Variabel X₁</strong>, sedangkan Sumbu Vertikal mewakili <strong id="infoLabelX2">Variabel X₂</strong> sesuai dengan data yang Anda inputkan.
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
 
     <!-- Bootstrap 5.2.3 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js CDN untuk merender grafik -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- Script Chart.js dengan Pembacaan Input & Styling Cerah -->
     <script>
-        // Contoh Script Inisialisasi Grafik menggunakan Chart.js
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1. Ambil data dari LocalStorage yang diinput sebelumnya
+        const storedData = JSON.parse(localStorage.getItem("spkSmartInputData"));
+        
+        // Fallback default jika data belum diinput
+        const labelX1 = storedData && storedData.varX1 ? storedData.varX1 : "Variabel X1 (Produk A)";
+        const labelX2 = storedData && storedData.varX2 ? storedData.varX2 : "Variabel X2 (Produk B)";
+
+        // Update teks info keterangan
+        document.getElementById("infoLabelX1").textContent = labelX1;
+        document.getElementById("infoLabelX2").textContent = labelX2;
+
+        // 2. Inisialisasi Grafik Chart.js
         const ctx = document.getElementById('lpChart').getContext('2d');
         const lpChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [0, 10, 20, 30, 40, 50, 60],
-                datasets: [{
-                    label: 'Kendala 1 (2X₁ + 3X₂ ≤ 120)',
-                    data: [{x: 0, y: 40}, {x: 60, y: 0}],
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderWidth: 2,
-                    fill: false
+          type: 'line',
+          data: {
+            datasets: [
+              {
+                label: 'Kendala 1 (Garis Merah Solid)',
+                data: [{x: 0, y: 40}, {x: 60, y: 0}],
+                borderColor: '#dc3545', // Merah full/solid
+                backgroundColor: 'transparent',
+                borderWidth: 3,
+                pointRadius: 4,
+                pointBackgroundColor: '#dc3545',
+                fill: false
+              },
+              {
+                label: 'Kendala 2 (Garis Biru Solid)',
+                data: [{x: 0, y: 40}, {x: 80, y: 0}],
+                borderColor: '#0d6efd', // Biru full/solid
+                backgroundColor: 'transparent',
+                borderWidth: 3,
+                pointRadius: 4,
+                pointBackgroundColor: '#0d6efd',
+                fill: false
+              },
+              {
+                label: 'Daerah Feasible (Penyelesaian)',
+                data: [
+                  {x: 0, y: 0},
+                  {x: 0, y: 40},
+                  {x: 24, y: 28}, // Titik perpotongan optimal
+                  {x: 60, y: 0}
+                ],
+                borderColor: 'transparent',
+                backgroundColor: 'rgba(25, 135, 84, 0.2)', // Hijau lembut transparan
+                borderWidth: 0,
+                fill: 'origin',
+                pointRadius: 0
+              },
+              {
+                label: 'Titik Optimal',
+                data: [{x: 24, y: 28}],
+                borderColor: '#ffc107',
+                backgroundColor: '#ffc107', // Warna kuning emas
+                borderWidth: 3,
+                pointRadius: 9, // Ukuran bulat besar
+                pointHoverRadius: 11,
+                pointStyle: 'circle', // Bulat sempurna
+                type: 'scatter'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                type: 'linear',
+                position: 'bottom',
+                min: 0,
+                max: 90,
+                grid: {
+                  color: '#e9ecef' // Garis kisi lembut
                 },
-                {
-                    label: 'Kendala 2 (X₁ + 2X₂ ≤ 80)',
-                    data: [{x: 0, y: 40}, {x: 80, y: 0}],
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderWidth: 2,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        title: {
-                            display: true,
-                            text: 'Variabel X₁'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Variabel X₂'
-                        }
-                    }
+                title: {
+                  display: true,
+                  text: `Sumbu X₁ : ${labelX1}`,
+                  color: '#0d6efd',
+                  font: {
+                    weight: 'bold',
+                    size: 13
+                  }
                 }
+              },
+              y: {
+                min: 0,
+                max: 50,
+                grid: {
+                  color: '#e9ecef'
+                },
+                title: {
+                  display: true,
+                  text: `Sumbu X₂ : ${labelX2}`,
+                  color: '#0d6efd',
+                  font: {
+                    weight: 'bold',
+                    size: 13
+                  }
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  usePointStyle: true,
+                  font: {
+                    size: 12
+                  }
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return `${context.dataset.label}: (${context.parsed.x}, ${context.parsed.y})`;
+                  }
+                }
+              }
             }
+          }
         });
+      });
     </script>
-</body>
+  </body>
 </html>

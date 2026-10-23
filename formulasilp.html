@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPKSmart - Formulasi Linear Programming</title>
+
+    <!-- CSS Bootstrap 5.2.3 CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+
+    <!-- Styling Tambahan khusus Formulasi LP -->
+    <style>
+      .step-card {
+        border-left: 4px solid #0d6efd;
+        transition: transform 0.2s ease-in-out;
+      }
+      .step-card:hover {
+        transform: translateY(-3px);
+      }
+
+      /* SEMUA TOMBOL MENU DIBUAT SERAGAM SEPERTI TOMBOL UTAMA */
+      .sidebar-menu .nav-link {
+        color: #ffffff !important; /* Teks putih agar kontras */
+        background-color: #0d6efd !important; /* Warna biru seragam */
+        border-radius: 8px;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 4px rgba(13, 110, 253, 0.15);
+      }
+
+      /* EFEK KETIKA MOUSE DIARAHKAN (HOVER) */
+      .sidebar-menu .nav-link:hover {
+        background-color: #0b5ed7 !important;
+        transform: translateX(4px);
+        box-shadow: 0 4px 6px rgba(13, 110, 253, 0.25);
+      }
+
+      /* KETIKA MENU SEDANG AKTIF (FORMULASI LP) */
+      .sidebar-menu .nav-link.active {
+        background-color: #0a58ca !important;
+        font-weight: bold;
+      }
+
+      /* KUSTOMISASI KOTAK NOTASI MATEMATIKA */
+      .math-box {
+        background-color: #f8f9fa;
+        border-left: 5px solid #0d6efd;
+        font-family: 'Consolas', 'Courier New', Courier, monospace;
+        font-size: 1.15rem;
+        letter-spacing: 0.5px;
+      }
+
+      .math-variable {
+        color: #0d6efd;
+        font-weight: bold;
+      }
+
+      .math-operator {
+        color: #dc3545;
+        font-weight: bold;
+      }
+
+      .math-label {
+        font-size: 0.85rem;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <!-- PEMBUNGKUS UTAMA LAYOUT 2 KOLOM -->
+    <div class="container-fluid">
+      <div class="row flex-nowrap">
+        <!-- ================= KOLOM KIRI: SIDEBAR PERMANEN ================= -->
+        <div
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-white border-end min-vh-100 shadow-sm"
+        >
+          <div
+            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-3 text-white"
+          >
+            <!-- Logo / Judul Sidebar -->
+            <a
+              href="Dasboard.html"
+              class="d-flex align-items-center pb-3 mb-md-3 me-md-auto text-dark text-decoration-none border-bottom w-100"
+            >
+              <span class="fs-5 fw-bold text-primary">SPKSmart</span>
+            </a>
+
+            <!-- Daftar Menu Navigasi -->
+            <ul
+              class="nav nav-pills flex-column mb-auto w-100 sidebar-menu gap-2"
+            >
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="Dasboard.html"
+                  >🏠 Dashboard</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="inputData.html">
+                  📝 Input Data<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Parameter Model</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <!-- MENU AKTIF DI HALAMAN INI -->
+                <a class="nav-link active py-2 px-3" href="formulasilp.html">
+                  📐 Formulasi LP<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Model Matematis</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="graftlp.html">
+                  📊 Grafik LP<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Daerah Feasible</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-2 px-3" href="rekomendasi.html">
+                  💡 Analisis Hasil Keputusan<br />
+                  <small class="opacity-75" style="font-size: 11px"
+                    >Keputusan Optimal & Slack</small
+                  >
+                </a>
+              </li>
+              <li class="nav-item border-top pt-2 mt-2">
+                <a class="nav-link py-2 px-3" href="panduanpengguna.html">
+                  📖 Panduan Pengguna Sistem
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= KOLOM KANAN: KONTEN UTAMA ================= -->
+        <main class="col py-4 px-4 bg-light">
+          <!-- HEADER HALAMAN -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <span class="badge bg-primary mb-1">Model Matematis</span>
+              <h2 class="fw-bold text-primary mb-0">Formulasi Linear Programming (LP)</h2>
+              <p class="text-secondary small mb-0">
+                Hasil konversi parameter input ke dalam bentuk persamaan & pertidaksamaan matematika.
+              </p>
+            </div>
+            <div>
+              <a href="inputData.html" class="btn btn-outline-primary btn-sm me-2">
+                ✏️ Ubah Input Data
+              </a>
+              <a href="graftlp.html" class="btn btn-primary btn-sm">
+                📊 Lanjut ke Grafik LP ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- SECTION 1: RINGKASAN PARAMETER INPUT -->
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-dark mb-3 border-bottom pb-2">
+                🏢 Identitas Usaha & Variabel Keputusan
+              </h5>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="p-3 bg-light rounded-3 border">
+                    <span class="text-muted small d-block">Nama Perusahaan / Organisasi:</span>
+                    <strong class="fs-6 text-primary">PT. Usaha Manunggal Jaya</strong>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-3 bg-light rounded-3 border">
+                    <span class="text-muted small d-block">Target Optimasi:</span>
+                    <strong class="fs-6 text-success">Maksimalkan Keuntungan (Maksimasi)</strong>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-3 bg-light rounded-3 border">
+                    <span class="badge bg-primary mb-1">Variabel X₁</span>
+                    <div>
+                      <strong class="text-dark">Produk A (Meja)</strong>
+                      <span class="text-muted small d-block">Koefisien Keuntungan (c₁): <strong>Rp 500.000</strong></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-3 bg-light rounded-3 border">
+                    <span class="badge bg-primary mb-1">Variabel X₂</span>
+                    <div>
+                      <strong class="text-dark">Produk B (Kursi)</strong>
+                      <span class="text-muted small d-block">Koefisien Keuntungan (c₂): <strong>Rp 300.000</strong></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 2: FORMULASI MATEMATIS PERSAMAAN LP -->
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-dark mb-3 border-bottom pb-2">
+                📐 Pemodelan Matematika Linear Programming
+              </h5>
+
+              <!-- FUNGSI TUJUAN -->
+              <div class="mb-4">
+                <div class="d-flex align-items-center mb-2">
+                  <span class="badge bg-success me-2">Langkah 1</span>
+                  <h6 class="fw-bold text-dark mb-0">Fungsi Tujuan (Objective Function)</h6>
+                </div>
+                <p class="text-muted small mb-2">
+                  Persamaan untuk memaksimalkan total keuntungan berdasarkan jumlah kombinasi variabel $X_1$ dan $X_2$.
+                </p>
+                <div class="p-3 rounded-3 math-box shadow-sm">
+                  <span>Maksimumkan <strong>Z</strong> = </span>
+                  <span class="math-variable">500.000</span> X<sub>1</sub> 
+                  <span> + </span>
+                  <span class="math-variable">300.000</span> X<sub>2</sub>
+                </div>
+              </div>
+
+              <!-- FUNGSI KENDALA -->
+              <div class="mb-4">
+                <div class="d-flex align-items-center mb-2">
+                  <span class="badge bg-warning text-dark me-2">Langkah 2</span>
+                  <h6 class="fw-bold text-dark mb-0">Fungsi Kendala (Constraints / Batasan Sumber Daya)</h6>
+                </div>
+                <p class="text-muted small mb-2">
+                  Batasan kapasitas atau ketersediaan sumber daya yang dimiliki usaha/organisasi.
+                </p>
+                <div class="p-3 rounded-3 math-box shadow-sm">
+                  <!-- Kendala 1 -->
+                  <div class="mb-2">
+                    <span class="math-label text-secondary fw-normal me-2">[Kendala 1 - Bahan Baku Kayu]:</span><br />
+                    <span>2</span> X<sub>1</sub> + <span>1</span> X<sub>2</sub> 
+                    <span class="math-operator"> ≤ </span> <span>100</span>
+                  </div>
+                  <!-- Kendala 2 -->
+                  <div>
+                    <span class="math-label text-secondary fw-normal me-2">[Kendala 2 - Jam Kerja Mesin]:</span><br />
+                    <span>1</span> X<sub>1</sub> + <span>2</span> X<sub>2</sub> 
+                    <span class="math-operator"> ≤ </span> <span>80</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SYARAT NON-NEGATIF -->
+              <div>
+                <div class="d-flex align-items-center mb-2">
+                  <span class="badge bg-secondary me-2">Langkah 3</span>
+                  <h6 class="fw-bold text-dark mb-0">Batasan Non-Negatif (Non-Negativity Constraints)</h6>
+                </div>
+                <p class="text-muted small mb-2">
+                  Syarat mutlak bahwa jumlah produksi tidak boleh bernilai negatif.
+                </p>
+                <div class="p-3 rounded-3 math-box shadow-sm">
+                  X<sub>1</sub> <span class="math-operator">≥</span> 0, &nbsp; X<sub>2</sub> <span class="math-operator">≥</span> 0
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 3: KOTAK INFORMASI / PANDUAN SISIPAN -->
+          <div class="card border-0 shadow-sm rounded-3 step-card bg-white p-3">
+            <div class="d-flex align-items-center">
+              <div class="fs-2 me-3 text-primary">💡</div>
+              <div>
+                <h6 class="fw-bold mb-1">Catatan Penjelasan Formulasi</h6>
+                <p class="text-secondary small mb-0">
+                  Formulasi ini akan diterjemahkan ke dalam koordinat sumbu X ($X_1$) dan sumbu Y ($X_2$) pada <strong>Grafik LP</strong> untuk menentukan titik potong serta memilih keputusan produksi terbaik.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <!-- JS Bootstrap 5.2.3 Bundle -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
